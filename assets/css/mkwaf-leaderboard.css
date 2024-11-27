@@ -1,0 +1,35 @@
+.mkwaf-leaderboard {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.mkwaf-leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mkwaf-leaderboard th, .mkwaf-leaderboard td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.mkwaf-leaderboard th {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.mkwaf-leaderboard tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.mkwaf-leaderboard tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.mkwaf-leaderboard h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 24px;
+}

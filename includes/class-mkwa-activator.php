@@ -1,9 +1,3 @@
-<?php
-
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
-}
-
 class MKWA_Activator {
 
     /**
@@ -32,15 +26,37 @@ class MKWA_Activator {
             UNIQUE KEY user_id (user_id)
         ) $charset_collate;";
 
+        // Create member badges table
+        $member_badges_table = $wpdb->prefix . 'mkwa_member_badges';
+        $member_badges_sql = "CREATE TABLE IF NOT EXISTS $member_badges_table (
+            id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            member_id BIGINT(20) UNSIGNED NOT NULL,
+            badge_id BIGINT(20) UNSIGNED NOT NULL,
+            earned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id)
+        ) $charset_collate;";
+
+        // Create badges table
+        $badges_table = $wpdb->prefix . 'mkwa_badges';
+        $badges_sql = "CREATE TABLE IF NOT EXISTS $badges_table (
+            id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            image_url VARCHAR(255),
+            PRIMARY KEY (id)
+        ) $charset_collate;";
+
         // Include the WordPress database upgrade functions
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-        // Execute the SQL to create the table
+        // Execute the SQL to create the tables
         dbDelta($members_sql);
+        dbDelta($member_badges_sql);
+        dbDelta($badges_sql);
 
         // Log table creation success
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("MKWA Fitness plugin activated: Table $members_table created successfully.");
+            error_log("MKWA Fitness plugin activated: Tables created successfully.");
         }
 
         // Flush rewrite rules
@@ -50,6 +66,9 @@ class MKWA_Activator {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('MKWA Fitness plugin activation completed successfully.');
         }
+
+        // Set default plugin options
+        self::set_default_options();
     }
 
     /**

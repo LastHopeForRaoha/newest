@@ -84,7 +84,7 @@ spl_autoload_register(function ($class) {
 });
 
 // Plugin Activation Hook
-// register_activation_hook(__FILE__, ['MKWA_Activator', 'activate']);
+register_activation_hook(__FILE__, ['MKWA_Activator', 'activate']);
 
 
 // Enqueue Plugin Assets

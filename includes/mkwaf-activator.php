@@ -9,8 +9,9 @@ function mkwaf_create_tables() {
     global $wpdb;
 
     $charset_collate = $wpdb->get_charset_collate();
-    $table_name = $wpdb->prefix . 'mkwaf_activity_log';
 
+    // Create activity log table
+    $table_name = $wpdb->prefix . 'mkwaf_activity_log';
     $sql = "CREATE TABLE $table_name (
         id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         user_id BIGINT(20) UNSIGNED NOT NULL,
@@ -20,8 +21,18 @@ function mkwaf_create_tables() {
         date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
     ) $charset_collate;";
-
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+
+    // Create member badges table
+    $table_name = $wpdb->prefix . 'mkwa_member_badges';
+    $sql = "CREATE TABLE $table_name (
+        id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        member_id BIGINT(20) UNSIGNED NOT NULL,
+        badge_id BIGINT(20) UNSIGNED NOT NULL,
+        earned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
     dbDelta($sql);
 }
 

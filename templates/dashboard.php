@@ -3,6 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+global $wpdb;
+
 $member_id = mkwa_get_member_id(get_current_user_id());
 $member_stats = mkwa_get_member_stats($member_id);
 ?>
